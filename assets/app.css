@@ -1,0 +1,50 @@
+#utk { max-width: 1400px; text-align: right; }
+#utk [hidden], .utk-ov [hidden] { display: none !important; }
+#utk code { direction: ltr; unicode-bidi: embed; font-size: 12px; background: transparent; padding: 0; }
+#utk .utk-tabs { display: flex; gap: 4px; border-bottom: 1px solid #c3c4c7; margin: 12px 0 16px; }
+#utk .utk-tabs a { padding: 8px 16px; text-decoration: none; border: 1px solid transparent; border-bottom: 0; border-radius: 4px 4px 0 0; color: #50575e; }
+#utk .utk-tabs a.on { background: #fff; border-color: #c3c4c7; color: #1d2327; font-weight: 600; margin-bottom: -1px; }
+#utk .utk-card { background: #fff; border: 1px solid #c3c4c7; border-radius: 4px; padding: 4px 16px 12px; margin-bottom: 16px; }
+#utk .utk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-bottom: 8px; }
+#utk .utk-q { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+#utk .utk-stat { background: #fff; border: 1px solid #c3c4c7; border-right: 4px solid #8c8f94; border-radius: 4px; padding: 10px 14px; display: flex; flex-direction: column; gap: 4px; }
+#utk .utk-stat b { font-size: 20px; line-height: 1.3; }
+#utk .utk-stat span { color: #50575e; }
+#utk .utk-stat small { color: #6b7075; }
+#utk .utk-stat.ok { border-right-color: #00a32a; }
+#utk .utk-stat.bad { border-right-color: #d63638; }
+#utk .utk-stat.warn { border-right-color: #dba617; }
+#utk .utk-stat.hi { border-right-color: #2271b1; background: #f0f6fc; }
+#utk .utk-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+#utk .utk-filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+#utk .utk-filters input[type=search], #utk .utk-filters input[type=text] { min-width: 200px; }
+#utk .utk-sum { margin: 10px 0; font-size: 14px; }
+#utk .utk-t td, #utk .utk-t th { vertical-align: middle; }
+#utk .utk-th { width: 56px; }
+#utk .utk-th img { width: 48px; height: 48px; object-fit: cover; border-radius: 3px; background: #f0f0f1; display: block; }
+#utk .utk-th span { display: flex; width: 48px; height: 48px; align-items: center; justify-content: center; background: #f0f0f1; border-radius: 3px; font-size: 11px; color: #6b7075; }
+#utk .utk-nm { max-width: 520px; word-break: break-all; }
+#utk tr.st-unused td:first-child { box-shadow: inset -3px 0 0 #d63638; }
+#utk tr.st-inactive td:first-child { box-shadow: inset -3px 0 0 #dba617; }
+#utk tr.st-used td:first-child { box-shadow: inset -3px 0 0 #00a32a; }
+#utk tr.utk-gh td { background: #f0f6fc; border-top: 2px solid #2271b1; }
+#utk tr.utk-detail > td { background: #fafafa; }
+#utk tr.fl-s td, #utk tr.fl-s code { color: #b32d2e; }
+#utk tr.fl-a td { color: #996800; }
+#utk .utk-b { display: inline-block; font-size: 11px; line-height: 1.7; padding: 0 7px; border-radius: 10px; background: #dcdcde; color: #1d2327; margin-inline-end: 4px; white-space: nowrap; }
+#utk .utk-b.b-unused, #utk .utk-b.b-bad { background: #fcf0f1; color: #b32d2e; }
+#utk .utk-b.b-inactive, #utk .utk-b.b-warn { background: #fcf9e8; color: #996800; }
+#utk .utk-b.b-used { background: #edfaef; color: #007017; }
+#utk .utk-pg { margin: 12px 0; display: flex; gap: 8px; align-items: center; }
+#utk .utk-selbar { position: sticky; bottom: 0; z-index: 50; background: #1d2327; color: #fff; padding: 10px 16px; border-radius: 4px 4px 0 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: center; box-shadow: 0 -2px 8px rgba(0, 0, 0, .25); }
+#utk .utk-selbar a { color: #72aee6; }
+#utk .utk-selbar label { color: #dcdcde; margin-inline-end: 8px; }
+#utk .utk-set { background: #fff; border: 1px solid #c3c4c7; border-radius: 4px; margin: 0 0 12px; }
+#utk .utk-sh { padding: 8px 12px; background: #f6f7f7; border-bottom: 1px solid #dcdcde; font-weight: 600; }
+.utk-ov { position: fixed; inset: 0; background: rgba(0, 0, 0, .55); z-index: 100000; display: flex; align-items: center; justify-content: center; }
+.utk-md { background: #fff; border-radius: 6px; padding: 20px 24px; width: min(560px, 92vw); max-height: 80vh; overflow: auto; text-align: right; }
+.utk-md h3 { margin-top: 0; }
+.utk-bar { height: 10px; background: #dcdcde; border-radius: 5px; overflow: hidden; }
+.utk-bar i { display: block; height: 100%; width: 0; background: #2271b1; transition: width .3s; }
+.utk-mt { min-height: 22px; }
+.utk-ml div { padding: 2px 0; }
