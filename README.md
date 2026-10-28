@@ -1,45 +1,49 @@
 # Uploads Toolkit
 
-افزونهٔ وردپرس برای ممیزی و پاکسازی امن پوشهٔ `wp-content/uploads`: پیدا کردن فایل‌های بلااستفاده، نسخه‌های اضافهٔ thumbnail، فایل‌های تکراری (با هش محتوا)، و حذف آن‌ها با سطل بازیافت و امکان بازگردانی.
+A WordPress plugin to audit and safely clean the `wp-content/uploads` folder: find unused files, stale thumbnail versions and content-hash duplicates, then remove them through a restorable trash.
 
-WordPress plugin to audit and safely clean the `uploads` folder: unused files, stale thumbnail versions, content-hash duplicates, with a restorable trash.
+> The admin interface is in Persian (RTL).
 
-## قابلیت‌ها
+## Features
 
-- **اسکن مرحله‌ای (resumable)** با نوار پیشرفت؛ روی هاست‌های سنگین timeout نمی‌شود.
-- **ردیابی ارجاع‌ها** در محتوای نوشته‌ها، متای نوشته‌ها (المنتور، ACF، ووکامرس)، تصویر شاخص، options/theme_mods/ویجت‌ها، متای دسته‌ها و کاربران، جدول‌های افزونه‌ها (اسلایدر و ...) و فایل‌های قالب فعال. نام‌های فارسی (url-encoded و `\uXXXX`) هم پشتیبانی می‌شوند.
-- **نمای کلی:** حجم کل، حجم هر پوشه، تفکیک سال/ماه و نوع، توزیع تعداد نسخه‌ها.
-- **Explorer:** فیلتر، جستجو، گروه‌بندی (وضعیت، سال/ماه، نوع، والد، تعداد نسخه)، مرتب‌سازی، thumbnail، فهرست نسخه‌ها، انتخاب همهٔ نتایج فیلتر، خروجی CSV.
-- **حذف:** کل گروه (بلااستفاده‌ها)، فقط نسخه‌های اضافهٔ ثبت‌نشده، webp/avif ثبت‌نشده.
-- **تکراری‌ها:** تشخیص با md5 / sha1 / sha256 / xxh3 …؛ فقط کپی بلااستفاده پیشنهاد حذف می‌شود و قبل از حذف با sha256 دوباره تأیید می‌شود.
-- **سطل بازیافت:** حذف پیش‌فرض = انتقال به سطل (شامل رکورد کتابخانهٔ رسانه)؛ بازگردانی کامل؛ پاک‌سازی خودکار بعد از N روز. حذف دائمی فقط با تایپ `DELETE`.
+- **Resumable scan** with a progress bar. Each AJAX request does a few seconds of work and saves its state, so heavy sites don't time out.
+- **Reference tracking** across post content, post meta (Elementor, ACF, WooCommerce), featured images, options / theme mods / widgets, term and user meta, plugin tables (sliders, etc.) and the active theme's files. Non-ASCII file names (URL-encoded and `\uXXXX`) are handled.
+- **Overview:** total size, size per top-level folder, breakdown by year/month and by file type, distribution of how many versions each file has on disk.
+- **Explorer:** filters, search, grouping (status, year/month, type, parent post, version count), sorting, thumbnails, per-file version list, "select all results of this filter", CSV export.
+- **Cleanup:** remove a whole group (unused items), only stale unregistered thumbnail versions, or unregistered webp/avif copies.
+- **Duplicates:** detection by content hash (md5 / sha1 / sha256 / xxh3 ...). Only unused copies are suggested for removal, and the content is re-verified with sha256 right before deleting.
+- **Trash:** the default delete moves files (and the media-library record) to a trash; full restore; automatic purge after N days. Permanent delete requires typing `DELETE`.
 - **WP-CLI:** `wp utk scan`, `wp utk clean stale|unused|dups [--dry-run] [--permanent] [--alt] [--yes]`, `wp utk trash`.
 
-## ایمنی
+## Safety
 
-- مسیرها از نتیجهٔ ذخیره‌شده در سرور خوانده و قبل از هر حذف دوباره اعتبارسنجی می‌شوند (داخل uploads، بدون symlink / path traversal).
-- هرگز حذف نمی‌شوند: فایل در حال استفاده، جدیدتر از «حداقل سن» (پیش‌فرض ۳ روز)، الگوهای محافظت‌شده، فایلی که پس از اسکن تغییر کرده.
-- اگر نتیجهٔ اسکن قدیمی‌تر از ۲۴ ساعت باشد حذف مجاز نیست.
-- فایل‌های سطل با پسوند `.utk` ذخیره می‌شوند تا اجرا یا سرو نشوند.
-- «بلااستفاده» یعنی در جاهای بالا ارجاعی پیدا نشد؛ ارجاع‌های داینامیک (JS / کوئری مستقیم) دیده نمی‌شوند. **قبل از حذف بکاپ بگیرید.**
+- Paths are read from the scan result stored on the server (never from the browser) and re-validated before every delete: inside `uploads`, no symlinks, no path traversal.
+- Never deleted: files that are in use, newer than the minimum age (default 3 days), matching a protected pattern, or modified after the scan.
+- Deleting is blocked if the scan result is older than 24 hours.
+- Trash files are stored with a `.utk` suffix so they are never executed or served.
+- "Unused" means no reference was found in the places above. Dynamic references (JS, direct queries) are not visible. **Back up before deleting.**
 
-## نصب
+## Installation
 
-1. پوشهٔ `uploads-toolkit` را در `wp-content/plugins/` بگذارید (یا zip کنید و از «افزودن افزونه» آپلود کنید) و فعال کنید.
-2. پیشخوان ← ابزارها ← **Uploads Toolkit**.
+1. Put the `uploads-toolkit` folder in `wp-content/plugins/` (or zip it and upload it via *Plugins → Add New*) and activate it.
+2. Go to **Tools → Uploads Toolkit**.
 
-نیازمندی: PHP 7.4+ ، وردپرس 5.8+ (روی WP/MySQL واقعی هنوز تست نشده؛ ابتدا روی staging یا با بکاپ امتحان کنید).
+Requirements: PHP 7.4+, WordPress 5.8+. It has only been tested against a simulated WordPress/database so far, so try it on a staging copy or with a backup first.
 
-## ساختار
+## Structure
 
 ```
-uploads-toolkit.php   بوت‌استرپ
-inc/util.php          نرمال‌سازی مسیر، استخراج ارجاع‌ها، اعتبارسنجی مسیر
-inc/store.php         ذخیره‌ی وضعیت/نتایج/تنظیمات/لاگ (wp-content/utk-data-*)
-inc/scan.php          موتور اسکن مرحله‌ای و تحلیل
-inc/query.php         فیلتر، گروه‌بندی، صفحه‌بندی، تکراری‌ها
-inc/ops.php           حذف، سطل بازیافت، بازگردانی
-inc/admin.php         صفحهٔ مدیریت و روتر AJAX
-inc/cli.php           دستورهای WP-CLI
-assets/app.js|css     رابط کاربری
+uploads-toolkit.php   bootstrap
+inc/util.php          path normalisation, reference extraction, path validation
+inc/store.php         scan state / results / settings / log (wp-content/utk-data-*)
+inc/scan.php          resumable scan engine and analysis
+inc/query.php         filtering, grouping, pagination, duplicates
+inc/ops.php           delete, trash, restore
+inc/admin.php         admin page and AJAX router
+inc/cli.php           WP-CLI commands
+assets/app.js|css     user interface
 ```
+
+## License
+
+GPL-2.0-or-later. See [LICENSE](LICENSE).
